@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField("String", "APP_CENTER_SECRET", APP_CENTER_SECRET)
-        buildConfigField("String", "APP_CENTER_SECRET", "\"${System.env.APP_CENTER_SECRET}\"")
+        buildConfigField("String", "APP_CENTER_SECRET_CLOUD", "\"${System.env.APP_CENTER_SECRET_CLOUD}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true

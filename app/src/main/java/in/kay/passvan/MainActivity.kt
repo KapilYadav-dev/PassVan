@@ -15,8 +15,9 @@ import com.microsoft.appcenter.crashes.Crashes
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         AppCenter.start(
-            application, BuildConfig.APP_CENTER_SECRET,
+            application, BuildConfig.APP_CENTER_SECRET ?: BuildConfig.APP_CENTER_SECRET_CLOUD,
             Analytics::class.java, Crashes::class.java
         )
         setContent {
