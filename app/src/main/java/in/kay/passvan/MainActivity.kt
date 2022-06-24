@@ -1,10 +1,14 @@
 package `in`.kay.passvan
 
 import `in`.kay.passvan.screens.Intro
+import `in`.kay.passvan.screens.Splash
 import `in`.kay.passvan.ui.theme.PassVanTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
@@ -22,7 +26,20 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             PassVanTheme {
-                Intro()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = "splash",
+                ) {
+                    composable("splash") {
+                        Splash(navController = navController)
+                    }
+
+                    composable("intro") {
+                        Intro(navController = navController)
+                    }
+
+                }
             }
         }
     }

@@ -26,13 +26,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 
 @ExperimentalPagerApi
 @Composable
-fun Intro() {
+fun Intro(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val introViewModel: IntroViewModel = viewModel()
@@ -148,7 +149,7 @@ fun IntroPage(page: Int) {
                                     fontSize = 64.sp
                                 )
                             ) {
-                                append("DON’T TYPE,\n")
+                                append("DON’T TYPE,")
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -157,7 +158,7 @@ fun IntroPage(page: Int) {
                                     fontSize = 64.sp
                                 )
                             ) {
-                                append("AUTOFILL")
+                                append(" AUTOFILL")
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -166,7 +167,7 @@ fun IntroPage(page: Int) {
                                     fontSize = 64.sp
                                 )
                             ) {
-                                append("YOUR\nCREDENTIALS.")
+                                append(" YOUR CREDENTIALS.")
                             }
                         }
                     }
@@ -189,58 +190,58 @@ fun IntroPage(page: Int) {
                     border = if (page == 2) BorderStroke(4.dp, Color(0xfffFF6464)) else BorderStroke(4.dp, Color(0xfffE0E0E0)),
                     onClick = {},
                     modifier = Modifier
-                        .height(40.dp)
-                        .width(160.dp),
+                        .height(48.dp)
+                        .width(168.dp),
                     enabled = page == 2
                 ) {
                     Text(
                         text = "REGISTER",
                         fontFamily = BebasNue(),
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         color = if (page == 2) Color(0xfffFF6464) else Color(0xfffE0E0E0)
                     )
                 }
                 Button(
                     onClick = { /*TODO*/ },
                     modifier = Modifier
-                        .height(40.dp)
-                        .width(160.dp),
+                        .height(48.dp)
+                        .width(168.dp),
                     enabled = page == 2,
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xfffFF6464))
                 ) {
                     Text(
                         text = "LOGIN",
                         fontFamily = BebasNue(),
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         color = Color.White
                     )
                 }
             }
             Row(
                 modifier = Modifier
-                    .height(40.dp)
+                    .height(56.dp)
                     .layoutId("viewPageNo"), verticalAlignment = Alignment.CenterVertically
             ) {
                 when (page + 1) {
                     1 -> {
                         HighlitedText(page = page + 1)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         UnhighlitedText(page = 2)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         UnhighlitedText(page = 3)
                     }
                     2 -> {
                         UnhighlitedText(page = 1)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         HighlitedText(page = page + 1)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         UnhighlitedText(page = 3)
                     }
                     3 -> {
                         UnhighlitedText(page = 1)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         UnhighlitedText(page = 2)
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(16.dp))
                         HighlitedText(page = page + 1)
                     }
                 }
@@ -255,7 +256,7 @@ fun HighlitedText(page: Int) {
         text = page.toString(),
         color = Color(0xfffFF6464),
         fontFamily = BebasNue(),
-        fontSize = 32.sp,
+        fontSize = 40.sp,
         modifier = Modifier.fillMaxHeight()
     )
 }
@@ -266,7 +267,7 @@ fun UnhighlitedText(page: Int) {
         text = page.toString(),
         color = Color(0xfffBABABA),
         fontFamily = BebasNue(),
-        fontSize = 14.sp
+        fontSize = 20.sp
     )
 }
 
@@ -310,21 +311,17 @@ fun introConstraintSet(): ConstraintSet {
 
 
 data class IntroData(
-    val title: String,
     val description: String
 )
 
 fun introItems() = listOf(
     IntroData(
-        "Generate Secure Passwords.",
         "Stop using unsecure passwords for your online accounts, level up with OnePass. Get the most secure and difficult-to-crack passwords."
     ),
     IntroData(
-        "ALL YOUR PASSWORDS ARE HERE.",
         "Store and manage all of your passwords from one place. Don’t remember hundreds of passwords, just remember one."
     ),
     IntroData(
-        "DON’T TYPE, AUTOFILL YOUR CREDENTIALS.",
         "Don’t compromise your passwords by typing them in public, let OnePass autofill those and keep your credentials secure."
     )
 )
