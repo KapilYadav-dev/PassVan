@@ -30,6 +30,8 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
@@ -37,8 +39,6 @@ fun Intro(navController: NavController) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val introViewModel: IntroViewModel = viewModel()
-    val context = LocalContext.current
-    val currentPage = introViewModel.currentPage.collectAsState()
 
     val pagerState = rememberPagerState(
         pageCount = introItems().size,
@@ -56,7 +56,7 @@ fun Intro(navController: NavController) {
         )
         {
             HorizontalPager(state = pagerState) { page ->
-                IntroPage(pagerState.currentPage)
+                IntroPage(pagerState.currentPage, scope, navController)
             }
         }
 
@@ -64,7 +64,7 @@ fun Intro(navController: NavController) {
 }
 
 @Composable
-fun IntroPage(page: Int) {
+fun IntroPage(page: Int, scope: CoroutineScope, navController: NavController) {
     BoxWithConstraints() {
         ConstraintLayout(
             introConstraintSet(),
@@ -88,7 +88,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("GENERATE\n")
@@ -97,7 +97,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfffFF6464),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("SECURE\n")
@@ -106,7 +106,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("PASSWORDS.")
@@ -117,7 +117,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("ALL YOUR\n")
@@ -126,7 +126,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfffFF6464),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("PASSWORDS")
@@ -135,7 +135,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append(" ARE HERE.")
@@ -146,7 +146,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append("DON’T TYPE,")
@@ -155,7 +155,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfffFF6464),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append(" AUTOFILL")
@@ -164,7 +164,7 @@ fun IntroPage(page: Int) {
                                 style = SpanStyle(
                                     color = Color(0xfff545974),
                                     fontFamily = BebasNue(),
-                                    fontSize = 64.sp
+                                    fontSize = 56.sp
                                 )
                             ) {
                                 append(" YOUR CREDENTIALS.")
@@ -187,11 +187,14 @@ fun IntroPage(page: Int) {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 OutlinedButton(
-                    border = if (page == 2) BorderStroke(4.dp, Color(0xfffFF6464)) else BorderStroke(4.dp, Color(0xfffE0E0E0)),
-                    onClick = {},
+                    border = if (page == 2) BorderStroke(
+                        4.dp,
+                        Color(0xfffFF6464)
+                    ) else BorderStroke(4.dp, Color(0xfffE0E0E0)),
+                    onClick = { navController.navigate("register") },
                     modifier = Modifier
-                        .height(48.dp)
-                        .width(168.dp),
+                        .height(40.dp)
+                        .weight(1f),
                     enabled = page == 2
                 ) {
                     Text(
@@ -201,11 +204,16 @@ fun IntroPage(page: Int) {
                         color = if (page == 2) Color(0xfffFF6464) else Color(0xfffE0E0E0)
                     )
                 }
+                Spacer(modifier = Modifier.width(24.dp))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        scope.launch {
+                            navController.navigate("login")
+                        }
+                    },
                     modifier = Modifier
-                        .height(48.dp)
-                        .width(168.dp),
+                        .height(40.dp)
+                        .weight(1f),
                     enabled = page == 2,
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xfffFF6464))
                 ) {
@@ -225,23 +233,23 @@ fun IntroPage(page: Int) {
                 when (page + 1) {
                     1 -> {
                         HighlitedText(page = page + 1)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         UnhighlitedText(page = 2)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         UnhighlitedText(page = 3)
                     }
                     2 -> {
                         UnhighlitedText(page = 1)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         HighlitedText(page = page + 1)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         UnhighlitedText(page = 3)
                     }
                     3 -> {
                         UnhighlitedText(page = 1)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         UnhighlitedText(page = 2)
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         HighlitedText(page = page + 1)
                     }
                 }
@@ -287,7 +295,7 @@ fun introConstraintSet(): ConstraintSet {
             width = Dimension.fillToConstraints
             start.linkTo(parent.start, 24.dp)
             end.linkTo(parent.end, 24.dp)
-            top.linkTo(icon.bottom, 48.dp)
+            top.linkTo(icon.bottom, 40.dp)
 
         }
         constrain(tvDesc) {
@@ -298,12 +306,13 @@ fun introConstraintSet(): ConstraintSet {
         }
 
         constrain(pageNo) {
-            bottom.linkTo(btnContainer.top, 56.dp)
+            bottom.linkTo(btnContainer.top, 32.dp)
             start.linkTo(parent.start, 24.dp)
         }
         constrain(btnContainer) {
-            bottom.linkTo(parent.bottom, 40.dp)
-            centerHorizontallyTo(parent)
+            bottom.linkTo(parent.bottom, 32.dp)
+            start.linkTo(parent.start, 24.dp)
+            end.linkTo(parent.end, 24.dp)
             width = Dimension.matchParent
         }
     }

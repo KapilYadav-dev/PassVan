@@ -34,17 +34,17 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 
 @Composable
-fun Login(navController: NavController) {
+fun Register(navController: NavController) {
     var email by rememberSaveable {
         mutableStateOf("")
     }
     var password by rememberSaveable {
         mutableStateOf("")
     }
-    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+    var passwordVisible by rememberSaveable { mutableStateOf(true) }
 
     BoxWithConstraints() {
-        ConstraintLayout(splashConstraintSet(), modifier = Modifier.fillMaxSize()) {
+        ConstraintLayout(registerConstraintSet(), modifier = Modifier.fillMaxSize()) {
             Icon(
                 imageVector = Icons.Outlined.Lock,
                 modifier = Modifier
@@ -54,14 +54,14 @@ fun Login(navController: NavController) {
                 tint = Color(0xfffFF6464)
             )
             Text(
-                text = "Login",
+                text = "REGISTER",
                 fontSize = 64.sp,
                 fontFamily = BebasNue(),
                 color = Color(0xfff545974),
                 modifier = Modifier.layoutId("tvTitle")
             )
             Text(
-                text = "Let’s get back to your account!",
+                text = "Let’s get you setup with a new account!",
                 fontSize = 14.sp,
                 fontFamily = Poppins(),
                 color = Color(0xfffbababa),
@@ -121,15 +121,8 @@ fun Login(navController: NavController) {
                     )
                 }
             )
-            Text(
-                text = "Forgot Password",
-                fontSize = 14.sp,
-                fontFamily = Poppins(),
-                color = Color(0xfffFF6464),
-                modifier = Modifier.layoutId("tvForgotPassword")
-            )
             Button(
-                onClick = { navController.navigate("home") },
+                onClick = { },
                 modifier = Modifier
                     .layoutId("btnLogin")
                     .height(48.dp)
@@ -141,7 +134,7 @@ fun Login(navController: NavController) {
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text = "LOGIN",
+                    text = "REGISTER",
                     fontFamily = BebasNue(),
                     fontSize = 18.sp,
                     color = Color.White
@@ -149,7 +142,7 @@ fun Login(navController: NavController) {
             }
 
             Text(
-                text = "Don't have an account yet ?",
+                text = "Already have an account?",
                 fontSize = 14.sp,
                 fontFamily = Poppins(),
                 color = Color(0xfff545974),
@@ -157,13 +150,13 @@ fun Login(navController: NavController) {
             )
 
             Text(
-                text = "REGISTER",
+                text = "LOGIN",
                 fontSize = 16.sp,
                 fontFamily = BebasNue(),
                 color = Color(0xfffFF6464),
                 modifier = Modifier
                     .layoutId("tvRegister")
-                    .clickable { navController.navigate("register") }
+                    .clickable { navController.navigate("login") }
                     .padding(16.dp)
             )
         }
@@ -171,14 +164,13 @@ fun Login(navController: NavController) {
 }
 
 
-fun splashConstraintSet(): ConstraintSet {
+fun registerConstraintSet(): ConstraintSet {
     return ConstraintSet {
         val ivIcon = createRefFor("ivIcon")
         val tvTitle = createRefFor("tvTitle")
         val tvDesc = createRefFor("tvDesc")
         val etEmail = createRefFor("etEmail")
         val etPassword = createRefFor("etPassword")
-        val tvForgotPassword = createRefFor("tvForgotPassword")
         val btnLogin = createRefFor("btnLogin")
         val tvRegister = createRefFor("tvRegister")
         val tvDont = createRefFor("tvDont")
@@ -209,15 +201,11 @@ fun splashConstraintSet(): ConstraintSet {
             top.linkTo(etEmail.bottom, 20.dp)
             width = Dimension.fillToConstraints
         }
-        constrain(tvForgotPassword) {
-            centerHorizontallyTo(parent)
-            top.linkTo(etPassword.bottom, 16.dp)
-        }
         constrain(btnLogin) {
             start.linkTo(parent.start, 24.dp)
             end.linkTo(parent.end, 24.dp)
             width = Dimension.fillToConstraints
-            top.linkTo(tvForgotPassword.bottom, 24.dp)
+            top.linkTo(etPassword.bottom, 16.dp)
         }
         constrain(tvDont) {
             top.linkTo(btnLogin.bottom, 32.dp)

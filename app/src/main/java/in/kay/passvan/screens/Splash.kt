@@ -46,7 +46,7 @@ fun Splash(navController: NavController) {
 
     BoxWithConstraints {
         ConstraintLayout(
-            constraintSet(),
+            splashConstraintSet(),
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
@@ -87,7 +87,7 @@ fun Splash(navController: NavController) {
     }
 }
 
-fun constraintSet(): ConstraintSet {
+fun splashConstraintSet(): ConstraintSet {
     return ConstraintSet {
         val icon = createRefFor("ivIcon")
         val name = createRefFor("tvName")

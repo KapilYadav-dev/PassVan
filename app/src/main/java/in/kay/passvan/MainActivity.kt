@@ -2,6 +2,9 @@ package `in`.kay.passvan
 
 import `in`.kay.passvan.screens.Intro
 import `in`.kay.passvan.screens.Splash
+import `in`.kay.passvan.screens.auth.Home
+import `in`.kay.passvan.screens.auth.Login
+import `in`.kay.passvan.screens.auth.Register
 import `in`.kay.passvan.ui.theme.PassVanTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -32,13 +35,20 @@ class MainActivity : ComponentActivity() {
                     startDestination = "splash",
                 ) {
                     composable("splash") {
-                        Splash(navController = navController)
+                        Splash(navController)
                     }
-
                     composable("intro") {
-                        Intro(navController = navController)
+                        Intro(navController)
                     }
-
+                    composable("login") {
+                        Login(navController)
+                    }
+                    composable("register") {
+                        Register(navController)
+                    }
+                    composable("home" ){
+                        Home()
+                    }
                 }
             }
         }
