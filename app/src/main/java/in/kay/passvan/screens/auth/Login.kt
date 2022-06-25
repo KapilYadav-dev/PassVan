@@ -2,7 +2,6 @@ package `in`.kay.passvan.screens.auth
 
 import `in`.kay.passvan.ui.theme.BebasNue
 import `in`.kay.passvan.ui.theme.Poppins
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,12 +10,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.outlined.Password
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -24,29 +19,28 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.compose.runtime.saveable.rememberSaveable as rememberSaveable1
 
 @Composable
 fun Login(navController: NavController) {
-    var email by rememberSaveable {
+    var email by rememberSaveable1 {
         mutableStateOf("")
     }
-    var password by rememberSaveable {
+    var password by rememberSaveable1 {
         mutableStateOf("")
     }
-    var passwordVisible by rememberSaveable { mutableStateOf(false) }
+    var passwordVisible by rememberSaveable1 { mutableStateOf(false) }
 
-    BoxWithConstraints() {
+    BoxWithConstraints {
         ConstraintLayout(splashConstraintSet(), modifier = Modifier.fillMaxSize()) {
             Icon(
-                imageVector = Icons.Outlined.Lock,
+                imageVector = Icons.Outlined.Password,
                 modifier = Modifier
                     .size(48.dp)
                     .layoutId("ivIcon"),
@@ -126,10 +120,17 @@ fun Login(navController: NavController) {
                 fontSize = 14.sp,
                 fontFamily = Poppins(),
                 color = Color(0xfffFF6464),
-                modifier = Modifier.layoutId("tvForgotPassword")
+                modifier = Modifier
+                    .layoutId("tvForgotPassword")
+                    .clickable {
+                    }
             )
             Button(
-                onClick = { navController.navigate("home") },
+                onClick = {
+                    navController.navigate("home") {
+                        popUpTo(0)
+                    }
+                },
                 modifier = Modifier
                     .layoutId("btnLogin")
                     .height(48.dp)
@@ -163,7 +164,11 @@ fun Login(navController: NavController) {
                 color = Color(0xfffFF6464),
                 modifier = Modifier
                     .layoutId("tvRegister")
-                    .clickable { navController.navigate("register") }
+                    .clickable {
+                        navController.navigate("register") {
+                            popUpTo(0)
+                        }
+                    }
                     .padding(16.dp)
             )
         }

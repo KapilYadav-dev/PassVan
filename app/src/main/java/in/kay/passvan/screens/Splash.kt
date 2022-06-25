@@ -10,6 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Password
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -41,7 +42,9 @@ fun Splash(navController: NavController) {
                 })
         )
         delay(1000L)
-        navController.navigate("intro")
+        navController.navigate("intro") {
+
+        }
     }
 
     BoxWithConstraints {
@@ -52,7 +55,7 @@ fun Splash(navController: NavController) {
                 .background(Color.White)
         ) {
             Icon(
-                imageVector = Icons.Outlined.Lock,
+                imageVector = Icons.Outlined.Password,
                 modifier = Modifier
                     .size(48.dp)
                     .layoutId("ivIcon")

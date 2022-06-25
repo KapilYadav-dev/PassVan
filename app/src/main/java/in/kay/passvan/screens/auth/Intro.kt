@@ -1,22 +1,21 @@
-package `in`.kay.passvan.screens
+package `in`.kay.passvan.screens.auth
 
-import `in`.kay.passvan.screens.auth.IntroViewModel
 import `in`.kay.passvan.ui.theme.BebasNue
 import `in`.kay.passvan.ui.theme.Poppins
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Password
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -36,9 +34,9 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun Intro(navController: NavController) {
+
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val introViewModel: IntroViewModel = viewModel()
 
     val pagerState = rememberPagerState(
         pageCount = introItems().size,
@@ -46,6 +44,16 @@ fun Intro(navController: NavController) {
         initialPage = 0,
         infiniteLoop = false
     )
+    BackHandler() {
+        if (pagerState.currentPage > 0) {
+            scope.launch {
+                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+            }
+            return@BackHandler
+        }
+        navController.navigate("splash")
+    }
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +63,7 @@ fun Intro(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
         {
-            HorizontalPager(state = pagerState) { page ->
+            HorizontalPager(state = pagerState) {
                 IntroPage(pagerState.currentPage, scope, navController)
             }
         }
@@ -65,7 +73,7 @@ fun Intro(navController: NavController) {
 
 @Composable
 fun IntroPage(page: Int, scope: CoroutineScope, navController: NavController) {
-    BoxWithConstraints() {
+    BoxWithConstraints {
         ConstraintLayout(
             introConstraintSet(),
             modifier = Modifier
@@ -73,7 +81,7 @@ fun IntroPage(page: Int, scope: CoroutineScope, navController: NavController) {
                 .background(Color.White)
         ) {
             Icon(
-                imageVector = Icons.Outlined.Lock,
+                imageVector = Icons.Outlined.Password,
                 modifier = Modifier
                     .size(48.dp)
                     .layoutId("ivIcon"),
@@ -191,7 +199,11 @@ fun IntroPage(page: Int, scope: CoroutineScope, navController: NavController) {
                         4.dp,
                         Color(0xfffFF6464)
                     ) else BorderStroke(4.dp, Color(0xfffE0E0E0)),
-                    onClick = { navController.navigate("register") },
+                    onClick = {
+                        navController.navigate("register") {
+                            popUpTo(0)
+                        }
+                    },
                     modifier = Modifier
                         .height(40.dp)
                         .weight(1f),
@@ -208,7 +220,9 @@ fun IntroPage(page: Int, scope: CoroutineScope, navController: NavController) {
                 Button(
                     onClick = {
                         scope.launch {
-                            navController.navigate("login")
+                            navController.navigate("login") {
+                                popUpTo(0)
+                            }
                         }
                     },
                     modifier = Modifier

@@ -2,13 +2,16 @@ package `in`.kay.passvan.ui.theme
 
 import `in`.kay.passvan.R
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 val Typography = Typography(
-    h1 = TextStyle(fontFamily = BebasNue(), fontWeight = FontWeight.Normal),
+    h1 = TextStyle(fontFamily = BebasNue(), fontWeight = FontWeight.Normal, fontSize = 64.sp, color = Color(0xfffFF6464)),
     defaultFontFamily = Poppins()
 )
 

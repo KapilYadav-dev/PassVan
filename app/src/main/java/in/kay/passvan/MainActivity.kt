@@ -1,8 +1,8 @@
 package `in`.kay.passvan
 
-import `in`.kay.passvan.screens.Intro
+import `in`.kay.passvan.screens.auth.Intro
 import `in`.kay.passvan.screens.Splash
-import `in`.kay.passvan.screens.auth.Home
+import `in`.kay.passvan.screens.home.Home
 import `in`.kay.passvan.screens.auth.Login
 import `in`.kay.passvan.screens.auth.Register
 import `in`.kay.passvan.ui.theme.PassVanTheme

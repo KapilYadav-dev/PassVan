@@ -2,7 +2,6 @@ package `in`.kay.passvan.screens.auth
 
 import `in`.kay.passvan.ui.theme.BebasNue
 import `in`.kay.passvan.ui.theme.Poppins
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Password
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,14 +24,12 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 
 @Composable
 fun Register(navController: NavController) {
@@ -43,10 +41,10 @@ fun Register(navController: NavController) {
     }
     var passwordVisible by rememberSaveable { mutableStateOf(true) }
 
-    BoxWithConstraints() {
+    BoxWithConstraints {
         ConstraintLayout(registerConstraintSet(), modifier = Modifier.fillMaxSize()) {
             Icon(
-                imageVector = Icons.Outlined.Lock,
+                imageVector = Icons.Outlined.Password,
                 modifier = Modifier
                     .size(48.dp)
                     .layoutId("ivIcon"),
@@ -156,7 +154,11 @@ fun Register(navController: NavController) {
                 color = Color(0xfffFF6464),
                 modifier = Modifier
                     .layoutId("tvRegister")
-                    .clickable { navController.navigate("login") }
+                    .clickable {
+                        navController.navigate("login") {
+                            popUpTo(0)
+                        }
+                    }
                     .padding(16.dp)
             )
         }
