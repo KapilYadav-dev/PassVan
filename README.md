@@ -10,7 +10,12 @@ A password manager UI Kit Designed in JETPACK COMPOSE :)
 4) View Pager
 5) Custom UI in view pager
 
+# Remaing task !
 
+- [ ] Make backend using Spring and kotlin
+- [ ] Implement it with backend 
+
+# Want to contribute ? Just ping a PR ⚡
 <h1>Screenshots</h1>
 
 ![alt text](https://raw.githubusercontent.com/KapilYadav-dev/PassVan/master/cover.jpg)
